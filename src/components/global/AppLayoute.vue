@@ -3,6 +3,7 @@
     <v-layout>
       <v-navigation-drawer v-model="drawer" temporary app location="right">
         <p>
+          test
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
           deserunt adipisci enim veritatis illum natus tempore totam molestiae
           et, laboriosam temporibus aut vitae vel maiores asperiores mollitia,
