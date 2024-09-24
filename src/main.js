@@ -1,7 +1,13 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+
+//pinia config
+import { createPinia } from "pinia";
+
+// Emitter Config
+import mitt from "mitt";
+const Emitter = mitt();
 
 // Vuetify
 import "@mdi/font/css/materialdesignicons.css";
@@ -15,4 +21,30 @@ const Vuetify = createVuetify({
   directives,
 });
 
-createApp(App).use(Vuetify).use(store).use(router).mount("#app");
+//custom directive
+
+const gapDirective = {
+  beforeMount(el, binding) {
+    el.style.gap = binding.value;
+  },
+  updated(el, binding) {
+    el.style.gap = binding.value;
+  },
+};
+const widthDirective = {
+  beforeMount(el, binding) {
+    el.style.width = binding.value;
+  },
+  updated(el, binding) {
+    el.style.width = binding.value;
+  },
+};
+
+createApp(App)
+  .use(Vuetify)
+  .directive("gap", gapDirective)
+  .directive("width", widthDirective)
+  .provide("Emitter", Emitter)
+  .use(createPinia())
+  .use(router)
+  .mount("#app");
