@@ -6,6 +6,7 @@
         <slot></slot>
       </v-main>
       <appNav />
+      <FixedNav />
       <AppFooter />
     </v-layout>
   </div>
@@ -15,12 +16,14 @@
 import appNav from "./appNav.vue";
 import AppFooter from "./AppFooter.vue";
 import CartDrawer from "./CartDrawer.vue";
+import FixedNav from "./FixedNav.vue";
 export default {
   name: "appLayout",
   components: {
     appNav,
     AppFooter,
     CartDrawer,
+    FixedNav,
   },
 };
 </script>

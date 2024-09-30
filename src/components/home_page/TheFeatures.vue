@@ -2,7 +2,7 @@
   <div class="features">
     <v-container>
       <v-row>
-        <v-col>
+        <v-col cols="4">
           <div class="parent d-flex align-senter justify-center">
             <svg
               aria-hidden="true"
@@ -23,7 +23,7 @@
             <span>Free Shipping & Returns </span>
           </div>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <div class="guarantee parent d-flex align-senter justify-center">
             <svg
               aria-hidden="true"
@@ -44,7 +44,7 @@
             <span>lowest price guarantee</span>
           </div>
         </v-col>
-        <v-col>
+        <v-col cols="4">
           <div class="parent d-flex align-senter justify-center">
             <svg
               aria-hidden="true"
