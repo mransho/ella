@@ -32,4 +32,7 @@ nav {
     }
   }
 }
+.pointer {
+  cursor: pointer;
+}
 </style>
