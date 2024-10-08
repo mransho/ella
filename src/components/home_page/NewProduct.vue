@@ -6,7 +6,16 @@
     </div>
     <v-container fluid>
       <v-row>
-        <v-col cols="7">
+        <v-col cols="7" class="d-flex align-center" v-if="!products.length">
+          <v-row>
+            <v-col cols="4" v-for="num in 3" :key="num">
+              <v-skeleton-loader
+                type="image, article, button"
+              ></v-skeleton-loader>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="7" v-else>
           <Swiper
             :modules="modules"
             :slides-per-view="3"

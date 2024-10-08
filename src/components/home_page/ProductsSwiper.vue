@@ -6,6 +6,19 @@
       </h2>
       <a href="#" class="text-black">Shop All</a>
     </div>
+    <v-container fluid v-if="!products.length">
+      <v-row>
+        <v-col cols="12" class="d-flex align-center">
+          <v-row>
+            <v-col cols="3" v-for="num in 4" :key="num">
+              <v-skeleton-loader
+                type="image, article, button"
+              ></v-skeleton-loader>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
     <Swiper
       :modules="modules"
       :slides-per-view="4"
