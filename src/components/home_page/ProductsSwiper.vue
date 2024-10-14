@@ -31,7 +31,6 @@
         prevEl: '.swiper-button-prev',
       }"
       :loop="true"
-      :autoplay="{ delay: 3000, disableOnInteraction: false }"
     >
       <Swiper-slide v-for="item in products" :key="item.id">
         <v-card elevation="0" class="pb-5">
@@ -48,6 +47,16 @@
                 alt=""
                 v-bind="props"
               />
+              <v-btn
+                density="compact"
+                variant="outlined"
+                rounded="xl"
+                width="60"
+                height="30"
+                class="bg-white quick-view-btn"
+              >
+                Quick View
+              </v-btn>
             </div>
           </v-hover>
           <v-card-text class="text-clamp pl-0 pb-1">
@@ -90,6 +99,12 @@
               density="compact"
               variant="outlined"
               class="py-2 px-12 choose-options"
+              @click="
+                $router.push({
+                  name: 'products_details',
+                  params: { productId: item.id },
+                })
+              "
             >
               choose options
             </v-btn>
@@ -149,6 +164,24 @@ export default {
 .img-parent {
   height: 200px;
   overflow: hidden;
+  position: relative;
+  transition: 0.2 all ease-in-out;
+
+  .quick-view-btn {
+    border: 1px solid black;
+    font-size: 12px;
+    text-transform: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+.img-parent:hover {
+  .quick-view-btn {
+    opacity: 1 !important;
+  }
 }
 .item-pic {
   width: 30px;

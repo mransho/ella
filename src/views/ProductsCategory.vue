@@ -1,31 +1,21 @@
 <template>
-  <div class="new-produts pt-12">
-    <div class="title mb-5 px-5 d-flex align-center justify-space-between">
-      <h2>New Products</h2>
-      <a href="#" class="text-black">Shop All</a>
-    </div>
-    <v-container fluid>
-      <v-row>
-        <v-col cols="7" class="d-flex align-center" v-if="!products.length">
-          <v-row>
-            <v-col cols="4" v-for="num in 3" :key="num">
-              <v-skeleton-loader
-                type="image, article, button"
-              ></v-skeleton-loader>
-            </v-col>
-          </v-row>
+  <div class="products-category mt-10">
+    <h1 class="text-center">{{ $route.params.title }}</h1>
+    <v-container>
+      <v-row class="d-flex align-center" v-if="loading">
+        <v-col cols="3" v-for="num in 4" :key="num">
+          <v-skeleton-loader type="image, article, button"></v-skeleton-loader>
         </v-col>
-        <v-col cols="7" v-else>
-          <Swiper
-            :modules="modules"
-            :slides-per-view="3"
-            :space-between="20"
-            :pagination="{ clickable: true }"
-            :scrollbar="{ draggable: true }"
-            class="pb-10 px-5"
-            :loop="true"
+      </v-row>
+
+      <v-card v-else elevation="0">
+        <v-row>
+          <v-col
+            cols="3"
+            v-for="item in categoryProducts.products"
+            :key="item.id"
           >
-            <Swiper-slide v-for="item in products" :key="item.id">
+            <v-lazy>
               <v-card elevation="0" class="pb-5">
                 <v-hover v-slot="{ isHovering, props }">
                   <div class="img-parent">
@@ -80,7 +70,8 @@
                 </v-btn-toggle>
                 <div class="mt-5">
                   <v-btn
-                    density="compact"
+                    width="220"
+                    height="35"
                     variant="outlined"
                     class="py-2 px-12 choose-options"
                     @click="
@@ -94,38 +85,43 @@
                   </v-btn>
                 </div>
               </v-card>
-            </Swiper-slide>
-          </Swiper>
-        </v-col>
-        <v-col cols="5">
-          <img class="w-100" src="@/assets/images/vr-banner.webp" alt="" />
-        </v-col>
-      </v-row>
+            </v-lazy>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-container>
   </div>
 </template>
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination } from "swiper";
-
+import { productsModule } from "@/stores/products";
+import { mapActions, mapState } from "pinia";
 export default {
-  props: {
-    products: {
-      type: Array,
-    },
-  },
-  setup() {
-    return {
-      modules: [Pagination],
-    };
-  },
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   data: () => ({
     showenItem: {},
+    loading: true,
   }),
+  methods: {
+    ...mapActions(productsModule, ["getProductsByCategory"]),
+  },
+  watch: {
+    async $route() {
+      document.documentElement.scrollTo(0, 0);
+      this.loading = true;
+      await this.getProductsByCategory(this.$route.params.category);
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+    },
+  },
+  async mounted() {
+    await this.getProductsByCategory(this.$route.params.category);
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  },
+  computed: {
+    ...mapState(productsModule, ["categoryProducts"]),
+  },
 };
 </script>
 

@@ -7,6 +7,54 @@ export const productsModule = defineStore("productsModule", {
     mobilePhones: [],
     fragrances: [],
     furniture: [],
+    categoryProducts: [],
+    SingleProduct: [],
+    categories: [
+      {
+        title: "Smartphones",
+        route: "smartphones",
+      },
+      {
+        title: "Laptops",
+        route: "laptops",
+      },
+      {
+        title: "Furniture",
+        route: "furniture",
+      },
+      {
+        title: "Fragrances",
+        route: "fragrances",
+      },
+      {
+        title: "Tablets",
+        route: "tablets",
+      },
+      {
+        title: "Men's Shoes",
+        route: "mens-shoes",
+      },
+      {
+        title: "Men's Watches",
+        route: "mens-watches",
+      },
+      {
+        title: "Home Decoration",
+        route: "home-decoration",
+      },
+      {
+        title: "Kitchen Accessories",
+        route: "kitchen-accessories",
+      },
+      {
+        title: "Motorcycle",
+        route: "motorcycle",
+      },
+      {
+        title: "Groceries",
+        route: "groceries",
+      },
+    ],
   }),
   actions: {
     getProducts() {
@@ -46,6 +94,23 @@ export const productsModule = defineStore("productsModule", {
         .get("https://dummyjson.com/products/category/furniture")
         .then((res) => {
           this.furniture = res.data.products.slice(0, 8);
+        })
+        .catch((err) => console.log(err));
+    },
+    getProductsByCategory(category) {
+      axios
+        .get(`https://dummyjson.com/products/category/${category}`)
+        .then((res) => {
+          this.categoryProducts = res.data;
+        })
+        .catch((err) => console.log(err));
+    },
+    getSingleProduct(ProductId) {
+      this.SingleProduct = [];
+      axios
+        .get(`https://dummyjson.com/products/${ProductId}`)
+        .then((res) => {
+          this.SingleProduct = res.data;
         })
         .catch((err) => console.log(err));
     },

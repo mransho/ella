@@ -9,7 +9,12 @@
       <v-container fluid>
         <v-row>
           <v-col cols="3">
-            <img src="../../assets/images/logo.png" alt="" />
+            <img
+              src="../../assets/images/logo.png"
+              alt=""
+              @click="$router.push({ name: 'home' })"
+              class="pointer"
+            />
           </v-col>
           <v-col cols="5">
             <div class="position-relative" v-width="'90%'">
@@ -116,15 +121,18 @@
           </v-col>
         </v-row>
         <v-row class="mt-6 justify-space-between">
-          <v-col cols="8">
+          <v-col cols="9">
             <ul class="links d-flex text-white justify-space-between">
-              <li>Smart Phones</li>
-              <li>Laptops</li>
-              <li>Fragrances</li>
-              <li>Men's Watches</li>
-              <li>Lighting</li>
-              <li>Furniture</li>
-              <li>Women's Jewellery</li>
+              <li v-for="category in categories" :key="category.title">
+                <router-link
+                  :to="{
+                    name: 'products_category',
+                    params: { category: category.route, title: category.title },
+                  }"
+                >
+                  {{ category.title }}
+                </router-link>
+              </li>
             </ul>
           </v-col>
           <v-col cols="3" v-gap="'35px'" class="d-flex justify-end">
@@ -188,6 +196,8 @@
 </template>
 
 <script>
+import { productsModule } from "@/stores/products";
+import { mapState } from "pinia";
 export default {
   name: "appNav",
   inject: ["Emitter"],
@@ -212,6 +222,9 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapState(productsModule, ["categories"]),
+  },
   methods: {
     openCart() {
       this.Emitter.emit("openCart");
@@ -247,5 +260,9 @@ svg {
   top: 50%;
   transform: translateY(-50%);
   width: 25px;
+}
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>

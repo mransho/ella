@@ -3,23 +3,31 @@
     <v-app-bar color="rgb(22 24 128)">
       <v-container fluid>
         <v-row>
-          <v-col cols="2">
-            <img class="w-50" src="../../assets/images/logo.png" alt="" />
+          <v-col cols="1" class="py-0 px-0 d-flex align-center">
+            <img
+              class="w-100 pointer"
+              src="../../assets/images/logo.png"
+              @click="$router.push({ name: 'home' })"
+              alt=""
+            />
           </v-col>
-          <v-col cols="8">
+          <v-col cols="10">
             <ul class="links d-flex text-white justify-space-between">
-              <li>Smart Phones</li>
-              <li>Laptops</li>
-              <li>Fragrances</li>
-              <li>Men's Watches</li>
-              <li>Lighting</li>
-              <li>Furniture</li>
-              <li>Women's Jewellery</li>
+              <li v-for="category in categories" :key="category.title">
+                <router-link
+                  :to="{
+                    name: 'products_category',
+                    params: { category: category.route, title: category.title },
+                  }"
+                >
+                  {{ category.title }}
+                </router-link>
+              </li>
             </ul>
           </v-col>
           <v-col
-            cols="2"
-            class="d-flex justify-end align-center"
+            cols="1"
+            class="d-flex justify-center align-center"
             style="gap: 20px"
           >
             <svg
@@ -71,6 +79,8 @@
 </template>
 
 <script>
+import { productsModule } from "@/stores/products";
+import { mapState } from "pinia";
 export default {
   name: "FixedNav",
   inject: ["Emitter"],
@@ -100,6 +110,9 @@ export default {
       this.Emitter.emit("openCart");
     },
   },
+  computed: {
+    ...mapState(productsModule, ["categories"]),
+  },
 };
 </script>
 <style scoped>
@@ -117,5 +130,9 @@ svg {
 }
 .svg-search {
   min-width: 20px;
+}
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>

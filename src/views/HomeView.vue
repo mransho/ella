@@ -67,6 +67,7 @@ import TopCategory from "@/components/home_page/TopCategory.vue";
 import NewProduct from "@/components/home_page/NewProduct.vue";
 import QualityFeatures from "@/components/home_page/QualityFeatures.vue";
 import WhyShopWithUs from "@/components/home_page/WhyShopWithUs.vue";
+import QuickView from "@/components/home_page/QuickView.vue";
 export default {
   name: "HomeView",
   components: {
