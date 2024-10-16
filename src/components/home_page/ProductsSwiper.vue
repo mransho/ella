@@ -54,6 +54,7 @@
                 width="60"
                 height="30"
                 class="bg-white quick-view-btn"
+                @click="openQuickView(item)"
               >
                 Quick View
               </v-btn>
@@ -121,6 +122,12 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
 export default {
+  inject: ["Emitter"],
+  methods: {
+    openQuickView(product) {
+      this.Emitter.emit("openQuickView", product);
+    },
+  },
   props: {
     products: {
       type: Array,

@@ -40,6 +40,17 @@
                       alt=""
                       v-bind="props"
                     />
+                    <v-btn
+                      density="compact"
+                      variant="outlined"
+                      rounded="xl"
+                      width="60"
+                      height="30"
+                      class="bg-white quick-view-btn"
+                      @click="openQuickView(item)"
+                    >
+                      Quick View
+                    </v-btn>
                   </div>
                 </v-hover>
                 <v-card-text class="text-clamp pl-0 pb-1">
@@ -114,6 +125,12 @@ export default {
       type: Array,
     },
   },
+  inject: ["Emitter"],
+  methods: {
+    openQuickView(product) {
+      this.Emitter.emit("openQuickView", product);
+    },
+  },
   setup() {
     return {
       modules: [Pagination],
@@ -145,7 +162,26 @@ export default {
   height: 100%;
 }
 .img-parent {
+  height: 200px;
   overflow: hidden;
+  position: relative;
+  transition: 0.2 all ease-in-out;
+
+  .quick-view-btn {
+    border: 1px solid black;
+    font-size: 12px;
+    text-transform: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+.img-parent:hover {
+  .quick-view-btn {
+    opacity: 1 !important;
+  }
 }
 .item-pic {
   width: 30px;

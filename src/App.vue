@@ -1,13 +1,15 @@
 <template>
   <app-layoute>
     <router-view />
+    <QuickView />
   </app-layoute>
 </template>
 
 <script>
 import AppLayoute from "@/components/global/AppLayoute";
+import QuickView from "@/components/global/QuickView.vue";
 export default {
-  components: { AppLayoute },
+  components: { AppLayoute, QuickView },
 };
 </script>
 
