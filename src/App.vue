@@ -2,6 +2,17 @@
   <app-layoute>
     <router-view />
     <QuickView />
+    <v-snackbar
+      v-model="bar"
+      location="left bottom"
+      max-width="300"
+      timeout="3000"
+    >
+      {{ itemTitle }} Has Been Added To Your Cart Successfully!
+      <template v-slot:actions>
+        <v-icon @click="bar = false"> mdi-close </v-icon>
+      </template>
+    </v-snackbar>
   </app-layoute>
 </template>
 
@@ -9,7 +20,18 @@
 import AppLayoute from "@/components/global/AppLayoute";
 import QuickView from "@/components/global/QuickView.vue";
 export default {
+  inject: ["Emitter"],
+  data: () => ({
+    bar: false,
+    itemTitle: "",
+  }),
   components: { AppLayoute, QuickView },
+  mounted() {
+    this.Emitter.on("showMsg", (data) => {
+      this.itemTitle = data;
+      this.bar = true;
+    });
+  },
 };
 </script>
 

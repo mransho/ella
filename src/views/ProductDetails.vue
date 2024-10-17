@@ -107,6 +107,8 @@
                 height="50"
                 class="w-75 rounded-xl bg-black"
                 density="compact"
+                @click="addToCart(SingleProduct)"
+                :loading="btnLoading"
               >
                 Add To Cart
               </v-btn>
@@ -120,9 +122,23 @@
 <script>
 import { productsModule } from "@/stores/products";
 import { mapActions, mapState } from "pinia";
+import { cartStore } from "@/stores/cart";
+
 export default {
+  inject: ["Emitter"],
   methods: {
     ...mapActions(productsModule, ["getSingleProduct"]),
+    ...mapActions(cartStore, ["addItem"]),
+    addToCart(item) {
+      item.quantity = this.quantity;
+      this.btnLoading = true;
+      setTimeout(() => {
+        this.btnLoading = false;
+        this.addItem(item);
+        this.Emitter.emit("openCart");
+        this.Emitter.emit("showMsg", item.title);
+      }, 500);
+    },
   },
   computed: {
     ...mapState(productsModule, ["SingleProduct"]),
@@ -131,6 +147,7 @@ export default {
     loading: true,
     tab: "",
     quantity: 1,
+    btnLoading: false,
   }),
   async beforeMount() {
     this.tab = "";

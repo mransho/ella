@@ -5,17 +5,26 @@
       v-model="drawer"
       app
       location="right"
-      class="pr-1"
+      class="pr-2 pl-4 pt-1 pb-0"
+      temporary
     >
+      <!--  -->
       <v-card class="px-0 shoppingCartHeader mt-5" elevation="0">
-        <v-card-title class="px-0"> shopping Cart </v-card-title>
+        <v-card-title
+          class="px-0 d-flex justify-space-between align-center w-100"
+        >
+          shopping Cart
+          <v-icon color="black" class="pointer" @click="drawer = false">
+            mdi-close
+          </v-icon>
+        </v-card-title>
 
-        <v-card-text class="px-0 itemNum">
+        <v-card-text class="px-0 pb-1 itemNum">
           {{ cartItems.length }} Items
         </v-card-text>
 
         <v-card-text class="px-0" v-if="!cartItems.length">
-          Free shipping for all orders over $800.00
+          Free shipping for all orders over $10000.00
         </v-card-text>
 
         <v-card-text class="px-0 text-center" v-if="!cartItems.length">
@@ -24,19 +33,27 @@
         <div class="bar-parent mt-4 position-relative" v-if="cartItems.length">
           <svg
             class="icon-shipping-truck"
-            fill="#F44336"
+            :fill="
+              parseInt((calcTotalPrice / 10000) * 100) < 50
+                ? '#F44336'
+                : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                  parseInt((calcTotalPrice / 10000) * 100) < 100
+                ? '#ff9800 '
+                : '#4CAF50'
+            "
             width="30"
             viewBox="0 0 40.55 24"
             :style="`
                   left: calc(${
-                    parseInt((calcTotalPrice / 1000) * 100) <= 100
-                      ? parseInt((calcTotalPrice / 1000) * 100)
+                    parseInt((calcTotalPrice / 10000) * 100) <= 100
+                      ? parseInt((calcTotalPrice / 10000) * 100)
                       : 100
                   }% - 30px); 
                   position: absolute;
                   bottom: 50%;
                   z-index: 1;
-                  transition: 0.2s all ease-in-out; `"
+                  transition: 0.2s all ease-in-out; 
+                  `"
           >
             <g id="Layer_2" data-name="Layer 2">
               <g id="Layer_1-2" data-name="Layer 1">
@@ -63,13 +80,20 @@
           </svg>
 
           <v-progress-linear
-            color="red"
+            :color="
+              parseInt((calcTotalPrice / 10000) * 100) < 50
+                ? 'red'
+                : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                  parseInt((calcTotalPrice / 10000) * 100) < 100
+                ? 'orange'
+                : 'green'
+            "
             height="10"
             striped
             style="transition: 0.2s all ease-in-out"
             :model-value="
-              parseInt((calcTotalPrice / 1000) * 100) <= 100
-                ? parseInt((calcTotalPrice / 1000) * 100)
+              parseInt((calcTotalPrice / 10000) * 100) <= 100
+                ? parseInt((calcTotalPrice / 10000) * 100)
                 : 100
             "
           >
@@ -96,6 +120,7 @@
             height="45"
             variant="outlined"
             density="compact"
+            @click="drawer = false"
           >
             continue shopping
           </v-btn>
@@ -103,7 +128,7 @@
       </v-card>
 
       <v-card class="pa-0 cartItems" elevation="0" v-if="cartItems.length">
-        <v-container class="px-1">
+        <v-container class="px-1 d-flex flex-column-reverse">
           <v-row
             v-for="(item, i) in cartItems"
             :key="item.id"
@@ -149,9 +174,20 @@
                     mdi-plus
                   </v-icon>
                 </div>
-                <v-icon size="20" class="mr-2" @click="deleteItem(item.id)">
-                  mdi-close
-                </v-icon>
+
+                <v-hover v-slot="{ isHovering, props }">
+                  <v-icon
+                    @click="deleteItem(item.id)"
+                    :color="isHovering ? 'red' : 'black'"
+                    class="pointer mr-2"
+                    size="20"
+                    v-bind="props"
+                  >
+                    {{
+                      isHovering ? "mdi-delete-empty" : "mdi-trash-can-outline"
+                    }}
+                  </v-icon>
+                </v-hover>
               </div>
             </v-col>
             <hr class="w-75 mt-2 mx-auto" v-if="i !== cartItems.length - 1" />
@@ -160,7 +196,7 @@
       </v-card>
 
       <v-card
-        class="pa-0 mb-5 mt-5 card-actions"
+        class="pa-0 mb-4 mt-5 card-actions"
         v-if="cartItems.length"
         elevation="0"
       >
@@ -182,11 +218,11 @@
             variant="outlined"
             density="compact"
             height="45"
+            @click="$router.push({ name: 'CartPage' })"
           >
             View Cart
           </v-btn>
         </v-card-actions>
-        {{ calcTotalPrice }}
       </v-card>
     </v-navigation-drawer>
   </div>
@@ -199,7 +235,7 @@ export default {
   name: "cartDrawer",
   inject: ["Emitter"],
   data: () => ({
-    drawer: true,
+    drawer: false,
   }),
   computed: {
     ...mapState(cartStore, ["cartItems"]),
@@ -290,23 +326,19 @@ export default {
 .View-Cart {
   border-color: #c6c6c6;
 }
-.cartItems {
-  overflow-y: auto;
-  max-height: calc(100vh - 319px);
-  margin-top: 139px;
+::v-deep .v-navigation-drawer__content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .shoppingCartHeader {
-  position: fixed;
-  top: 0;
-  width: 85%;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-shrink: 0;
+}
+.cartItems {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 .card-actions {
-  position: fixed;
-  bottom: 0;
-  width: 85%;
-  left: 50%;
-  transform: translateX(-50%);
+  flex-shrink: 0;
 }
 </style>

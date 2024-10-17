@@ -113,6 +113,7 @@
                     class="w-75 rounded-xl bg-black"
                     density="compact"
                     @click="addToCart(product)"
+                    :loading="btnLoading"
                   >
                     Add To Cart
                   </v-btn>
@@ -135,11 +136,12 @@ export default {
     tab: "",
     quantity: 1,
     product: {},
+    btnLoading: false,
   }),
   inject: ["Emitter"],
   watch: {
     dialog(value) {
-      if (!value) {
+      if (value == true) {
         this.loading = true;
       }
     },
@@ -148,7 +150,14 @@ export default {
     ...mapActions(cartStore, ["addItem"]),
     addToCart(item) {
       item.quantity = this.quantity;
-      this.addItem(item);
+      this.btnLoading = true;
+      setTimeout(() => {
+        this.btnLoading = false;
+        this.addItem(item);
+        this.Emitter.emit("openCart");
+        this.Emitter.emit("showMsg", item.title);
+        this.dialog = false;
+      }, 500);
     },
   },
   mounted() {

@@ -92,12 +92,15 @@
                 <span class="mt-2">Sign in</span>
               </div>
               <div
-                @click="openCart"
-                class="wishlists d-flex flex-column align-center"
+                @click="$route.name == 'CartPage' ? null : openCart()"
+                :class="`wishlists ${
+                  $route.name == 'CartPage' ? '' : 'pointer'
+                } d-flex flex-column align-center`"
               >
                 <v-badge
                   location="rigte top"
-                  content="2"
+                  :content="cartItems.length"
+                  v-if="cartItems.length"
                   color="#4eb0fd"
                   offsetX="-14"
                 ></v-badge>
@@ -198,6 +201,7 @@
 <script>
 import { productsModule } from "@/stores/products";
 import { mapState } from "pinia";
+import { cartStore } from "@/stores/cart";
 export default {
   name: "appNav",
   inject: ["Emitter"],
@@ -224,6 +228,7 @@ export default {
   }),
   computed: {
     ...mapState(productsModule, ["categories"]),
+    ...mapState(cartStore, ["cartItems"]),
   },
   methods: {
     openCart() {
@@ -236,7 +241,6 @@ export default {
 #navSearch {
   outline: none;
 }
-.wishlists,
 .pointer {
   cursor: pointer;
 }

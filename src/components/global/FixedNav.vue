@@ -42,12 +42,15 @@
               ></path>
             </svg>
             <div
-              @click="openCart"
-              class="wishlists d-flex flex-column align-center"
+              @click="$route.name == 'CartPage' ? null : openCart()"
+              :class="`wishlists  ${
+                $route.name == 'CartPage' ? '' : 'pointer'
+              }  d-flex flex-column align-center`"
             >
               <v-badge
                 location="rigte top"
-                content="2"
+                :content="cartItems.length"
+                v-if="cartItems.length"
                 color="red"
                 offsetX="-14"
               ></v-badge>
@@ -81,6 +84,7 @@
 <script>
 import { productsModule } from "@/stores/products";
 import { mapState } from "pinia";
+import { cartStore } from "@/stores/cart";
 export default {
   name: "FixedNav",
   inject: ["Emitter"],
@@ -112,11 +116,11 @@ export default {
   },
   computed: {
     ...mapState(productsModule, ["categories"]),
+    ...mapState(cartStore, ["cartItems"]),
   },
 };
 </script>
 <style scoped>
-.wishlists,
 .pointer {
   cursor: pointer;
 }
