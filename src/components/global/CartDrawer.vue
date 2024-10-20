@@ -36,7 +36,7 @@
             :fill="
               parseInt((calcTotalPrice / 10000) * 100) < 50
                 ? '#F44336'
-                : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                : parseInt((calcTotalPrice / 10000) * 100) >= 50 &&
                   parseInt((calcTotalPrice / 10000) * 100) < 100
                 ? '#ff9800 '
                 : '#4CAF50'
@@ -83,7 +83,7 @@
             :color="
               parseInt((calcTotalPrice / 10000) * 100) < 50
                 ? 'red'
-                : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                : parseInt((calcTotalPrice / 10000) * 100) >= 50 &&
                   parseInt((calcTotalPrice / 10000) * 100) < 100
                 ? 'orange'
                 : 'green'
@@ -158,7 +158,11 @@
                   <v-icon
                     size="17"
                     color="#909090"
-                    @click="item.quantity > 1 ? item.quantity-- : false"
+                    @click="
+                      item.quantity > 1
+                        ? (item.quantity--, setToLocalStorage())
+                        : false
+                    "
                   >
                     mdi-minus
                   </v-icon>
@@ -169,8 +173,13 @@
                     name=""
                     id=""
                     class="text-center py-3"
+                    readonly
                   />
-                  <v-icon size="17" color="#909090" @click="item.quantity++">
+                  <v-icon
+                    size="17"
+                    color="#909090"
+                    @click="item.quantity++, setToLocalStorage()"
+                  >
                     mdi-plus
                   </v-icon>
                 </div>
@@ -210,6 +219,7 @@
             elevation="0"
             density="compact"
             height="45"
+            @click="toCheckout"
           >
             Check Out
           </v-btn>
@@ -251,7 +261,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions(cartStore, ["getCartItems", "deleteItem"]),
+    ...mapActions(cartStore, [
+      "getCartItems",
+      "deleteItem",
+      "setToLocalStorage",
+    ]),
+    toCheckout() {
+      this.setToLocalStorage();
+      this.$router.push({ name: "CheckOut" });
+    },
   },
 
   mounted() {

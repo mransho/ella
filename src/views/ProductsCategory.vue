@@ -1,6 +1,6 @@
 <template>
   <div class="products-category mt-10">
-    <h1 class="text-center">{{ $route.params.title }}</h1>
+    <h1 class="text-center">{{ $route.query.title }}</h1>
     <v-container>
       <v-row class="d-flex align-center" v-if="loading">
         <v-col cols="3" v-for="num in 4" :key="num">
@@ -120,16 +120,22 @@ export default {
   },
   watch: {
     async $route() {
-      document.documentElement.scrollTo(0, 0);
-      this.loading = true;
-      await this.getProductsByCategory(this.$route.params.category);
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
+      if (this.$route.name == "products_category") {
+        document.documentElement.scrollTo(0, 0);
+        this.loading = true;
+        await this.getProductsByCategory(this.$route.query.category);
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+        console.log("fired");
+      }
     },
   },
   async mounted() {
-    await this.getProductsByCategory(this.$route.params.category);
+    if (!this.$route.query.category) {
+      return this.$router.go(-1);
+    }
+    await this.getProductsByCategory(this.$route.query.category);
     setTimeout(() => {
       this.loading = false;
     }, 500);

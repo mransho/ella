@@ -4,7 +4,18 @@
       <h2 :style="`color: ${titleColor}`">
         {{ title }}
       </h2>
-      <a href="#" class="text-black">Shop All</a>
+      <router-link
+        class="text-black"
+        :to="{
+          name: 'products_category',
+          params: {
+            title: categories[index].title,
+            category: categories[index].route,
+          },
+        }"
+      >
+        Shop All
+      </router-link>
     </div>
     <v-container fluid v-if="!products.length">
       <v-row>
@@ -31,6 +42,11 @@
         prevEl: '.swiper-button-prev',
       }"
       :loop="true"
+      :autoplay="{
+        delay: 3000,
+        pauseOnMouseEnter: true,
+        disableOnInteraction: false,
+      }"
     >
       <Swiper-slide v-for="item in products" :key="item.id">
         <v-card elevation="0" class="pb-5">
@@ -83,7 +99,7 @@
               }}
             </span>
           </v-card-text>
-          <v-btn-toggle v-model="showenItem[item.title]">
+          <v-btn-toggle v-model="showenItem[item.title]" mandatory>
             <v-btn
               v-for="(pic, i) in item.images"
               :value="pic"
@@ -120,13 +136,17 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation, Autoplay } from "swiper";
-
+import { productsModule } from "@/stores/products";
+import { mapState } from "pinia";
 export default {
   inject: ["Emitter"],
   methods: {
     openQuickView(product) {
       this.Emitter.emit("openQuickView", product);
     },
+  },
+  computed: {
+    ...mapState(productsModule, ["categories"]),
   },
   props: {
     products: {
@@ -137,6 +157,9 @@ export default {
     },
     titleColor: {
       type: String,
+    },
+    index: {
+      type: Number,
     },
   },
   setup() {

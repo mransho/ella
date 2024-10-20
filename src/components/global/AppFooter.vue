@@ -14,7 +14,7 @@
                 <router-link
                   :to="{
                     name: 'products_category',
-                    params: { category: category.route, title: category.title },
+                    query: { category: category.route, title: category.title },
                   }"
                 >
                   {{ category.title }}

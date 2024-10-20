@@ -9,17 +9,16 @@
             </template>
           </v-breadcrumbs>
         </v-col>
-        <v-col
-          cols="12"
-          v-if="cartItems.length"
-          class="pt-5 px-0 overflow-hidden"
-        >
+        <v-col cols="12" class="pt-5 px-0 overflow-hidden">
           <v-card-title
-            class="Youe-Cart px-0 d-flex justify-space-between align-center w-100"
+            class="Your-Cart px-0 d-flex justify-space-between align-center w-100"
           >
-            Youe Cart
+            Your Cart
           </v-card-title>
-          <div class="bar-parent mt-4 position-relative">
+          <div
+            class="bar-parent mt-4 position-relative"
+            v-if="cartItems.length"
+          >
             <svg
               class="icon-shipping-truck"
               width="30"
@@ -27,7 +26,7 @@
               :fill="
                 parseInt((calcTotalPrice / 10000) * 100) < 50
                   ? '#F44336'
-                  : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                  : parseInt((calcTotalPrice / 10000) * 100) >= 50 &&
                     parseInt((calcTotalPrice / 10000) * 100) < 100
                   ? '#ff9800 '
                   : '#4CAF50'
@@ -72,7 +71,7 @@
               :color="
                 parseInt((calcTotalPrice / 10000) * 100) < 50
                   ? 'red'
-                  : parseInt((calcTotalPrice / 10000) * 100) > 50 &&
+                  : parseInt((calcTotalPrice / 10000) * 100) >= 50 &&
                     parseInt((calcTotalPrice / 10000) * 100) < 100
                   ? 'orange'
                   : 'green'
@@ -88,6 +87,10 @@
             >
             </v-progress-linear>
           </div>
+          <v-card-text class="px-0 pt-3 pb-2" v-if="!cartItems.length">
+            Free shipping for all orders over $10000.00!
+          </v-card-text>
+
           <v-card-text
             class="px-0 pt-3 pb-2"
             v-if="cartItems.length && 10000 - calcTotalPrice > 0"
@@ -101,6 +104,32 @@
           >
             Your Order Now Is Included Free Shipping
           </v-card-text>
+
+          <v-card-text
+            class="px-0 pt-3 pb-2 mt-10 text-center"
+            v-if="!cartItems.length"
+          >
+            your cart is empty!
+          </v-card-text>
+
+          <v-cart-actions
+            v-if="!cartItems.length"
+            class="px-0 mt-10 d-flex justify-center flex-column"
+            v-gap="'15px'"
+          >
+            <v-btn
+              class="mx-auto font-weight-bold text-none rounded-xl"
+              width="300"
+              variant="outlined"
+              elevation="0"
+              density="compact"
+              height="45"
+              color="rgb(27 60 247)"
+              @click="$router.push({ name: 'home' })"
+            >
+              continue shopping
+            </v-btn>
+          </v-cart-actions>
         </v-col>
         <v-col v-if="cartItems.length" cols="8" class="px-3">
           <v-table class="w-100">
@@ -142,11 +171,16 @@
                       <v-icon
                         size="17"
                         color="#909090"
-                        @click="item.quantity > 1 ? item.quantity-- : false"
+                        @click="
+                          item.quantity > 1
+                            ? (item.quantity--, setToLocalStorage())
+                            : false
+                        "
                       >
                         mdi-minus
                       </v-icon>
                       <input
+                        readonly
                         type="number"
                         min="1"
                         v-model="item.quantity"
@@ -157,7 +191,7 @@
                       <v-icon
                         size="17"
                         color="#909090"
-                        @click="item.quantity++"
+                        @click="item.quantity++, setToLocalStorage()"
                       >
                         mdi-plus
                       </v-icon>
@@ -191,8 +225,12 @@
               </tr>
             </tbody>
           </v-table>
+
+          <v-divider length="100%" class="mt-5" color="black"></v-divider>
+          <v-divider length="100%" color="black"></v-divider>
+
           <v-card-text
-            class="px-0 pt-3 pb-2 d-flex align-center"
+            class="px-0 pt-5 pb-2 d-flex align-center"
             v-gap="'10px'"
             v-if="cartItems.length"
           >
@@ -272,7 +310,7 @@
                 height="45"
                 color="rgb(27 60 247)"
               >
-                Check Out
+                Calculate Shipping
               </v-btn>
             </v-cart-actions>
 
@@ -296,8 +334,9 @@
                 density="compact"
                 height="45"
                 color="rgb(27 60 247)"
+                @click="toCheckout"
               >
-                proceed to checkout
+                Proceed To Checkout
               </v-btn>
 
               <v-btn
@@ -353,7 +392,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions(cartStore, ["getCartItems", "deleteItem"]),
+    ...mapActions(cartStore, [
+      "getCartItems",
+      "deleteItem",
+      "setToLocalStorage",
+    ]),
+    toCheckout() {
+      this.setToLocalStorage();
+      this.$router.push({ name: "CheckOut" });
+    },
   },
 };
 </script>
@@ -403,10 +450,10 @@ th {
   color: #656565;
 }
 
-.Youe-Cart {
-  font-size: 17px;
+.Your-Cart {
+  font-size: 30px;
   font-weight: bold;
-  color: #9a9a9a;
+  color: #141414;
 }
 .item-title {
   white-space: pre-wrap;

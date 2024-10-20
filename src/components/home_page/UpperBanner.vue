@@ -21,7 +21,7 @@
     </div>
   </div>
 </template>
-<style lang="scss">
+<style scoped lang="scss">
 .banner {
   .parent {
     height: 500px;

@@ -23,16 +23,12 @@ export const productsModule = defineStore("productsModule", {
         route: "furniture",
       },
       {
-        title: "Fragrances",
-        route: "fragrances",
-      },
-      {
         title: "Tablets",
         route: "tablets",
       },
       {
-        title: "Men's Shoes",
-        route: "mens-shoes",
+        title: "Fragrances",
+        route: "fragrances",
       },
       {
         title: "Men's Watches",

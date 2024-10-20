@@ -2,8 +2,20 @@
   <div class="new-produts pt-12">
     <div class="title mb-5 px-5 d-flex align-center justify-space-between">
       <h2>New Products</h2>
-      <a href="#" class="text-black">Shop All</a>
+      <router-link
+        class="text-black"
+        :to="{
+          name: 'products_category',
+          params: {
+            title: categories[index].title,
+            category: categories[index].route,
+          },
+        }"
+      >
+        Shop All
+      </router-link>
     </div>
+
     <v-container fluid>
       <v-row>
         <v-col cols="7" class="d-flex align-center" v-if="!products.length">
@@ -77,7 +89,7 @@
                     }}
                   </span>
                 </v-card-text>
-                <v-btn-toggle v-model="showenItem[item.title]">
+                <v-btn-toggle v-model="showenItem[item.title]" mandatory>
                   <v-btn
                     v-for="(pic, i) in item.images"
                     :value="pic"
@@ -118,12 +130,20 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper";
+import { productsModule } from "@/stores/products";
+import { mapState } from "pinia";
 
 export default {
   props: {
     products: {
       type: Array,
     },
+    index: {
+      type: Number,
+    },
+  },
+  computed: {
+    ...mapState(productsModule, ["categories"]),
   },
   inject: ["Emitter"],
   methods: {

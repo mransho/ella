@@ -83,6 +83,7 @@
                 mdi-minus
               </v-icon>
               <input
+                readonly
                 type="number"
                 min="1"
                 v-model="quantity"

@@ -1,5 +1,5 @@
 <template>
-  <div class="quick-view mt-16">
+  <div class="quick-view" v-if="$route.name != 'CheckOut'">
     <v-dialog max-width="900" v-model="dialog">
       <v-icon class="icon-close" @click="dialog = false"> mdi-close </v-icon>
       <v-card elevation="0" class="content_card">
@@ -89,6 +89,7 @@
                     mdi-minus
                   </v-icon>
                   <input
+                    readonly
                     type="number"
                     min="1"
                     v-model="quantity"

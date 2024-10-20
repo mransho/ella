@@ -7,14 +7,16 @@
       :products="FlashDeals"
       title="Flash Deals"
       titleColor="#ff0303"
+      :index="0"
     />
     <TopCategory />
-    <NewProduct :products="newProducts" />
+    <NewProduct :index="1" :products="newProducts" />
     <QualityFeatures />
     <ProductsComponent
       :products="mobilePhones"
       title="Top Mobile Phones"
       titleColor="rgb(94 76 110)"
+      :index="0"
     />
     <v-container fluid>
       <v-row>
@@ -39,6 +41,7 @@
       :products="fragrances"
       title="Top Fragrances"
       titleColor="rgb(94 76 110)"
+      :index="4"
     />
     <v-container fluid>
       <v-row>
@@ -51,6 +54,7 @@
       :products="furniture"
       title="Top furniture"
       titleColor="rgb(94 76 110)"
+      :index="2"
     />
     <WhyShopWithUs />
   </div>

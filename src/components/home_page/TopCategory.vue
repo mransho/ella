@@ -6,7 +6,6 @@
     <div class="categories pt-13">
       <div class="title d-flex justify-center align-center mb-5">
         <h3 class="text-center flex-grow-1">Top Category</h3>
-        <a class="text-black mr-10" href="#">Shop All</a>
       </div>
       <v-container fluid>
         <v-row>
