@@ -1,27 +1,32 @@
 <template>
-  <div class="ProductDetails mt-16">
-    <h1>Product Details</h1>
+  <div class="ProductDetails mt-10">
+    <h1 class="px-4">Product Details</h1>
     <v-container fluid>
       <v-row>
-        <v-col cols="7">
-          <div class="d-flex justify-center">
+        <v-col
+          cols="12"
+          md="7"
+          class="d-flex flex-column justify-space-between"
+        >
+          <div class="d-flex justify-center img-parent">
             <img
               :src="tab ? tab : SingleProduct.thumbnail"
-              height="500"
               alt=""
               v-if="!loading"
             />
           </div>
           <v-skeleton-loader
             v-if="loading"
-            type="image, image, image"
+            :type="`${
+              widthSkeletonImage < 960 ? 'image' : 'image, image, image'
+            }`"
           ></v-skeleton-loader>
 
           <v-tabs center-active class="mt-10" v-model="tab">
             <v-tab
               v-for="(img, i) in SingleProduct.images"
               :key="i"
-              class="mx-10 d-flex justify-center"
+              class="mx-0 mx-md-10 d-flex justify-center"
               :value="img"
             >
               <v-skeleton-loader
@@ -32,13 +37,17 @@
             </v-tab>
           </v-tabs>
         </v-col>
-        <v-col cols="5" class="pt-0 pl-6">
+        <v-col cols="12" md="5" class="pt-0 pl-6 mt-2 mt-md-0">
           <v-skeleton-loader
             v-if="loading"
             type="article, article, article"
           ></v-skeleton-loader>
 
-          <v-card elevation="0" v-if="!loading">
+          <v-card
+            elevation="0"
+            class="d-flex flex-column h-100"
+            v-if="!loading"
+          >
             <v-card-title class="px-0">
               ({{ SingleProduct.title }}) sample -
               {{ SingleProduct.category }} for Sale
@@ -55,13 +64,13 @@
               </v-rating>
               <span class="mt-1">Stock: {{ SingleProduct.stock }}</span>
             </div>
-            <v-card-text class="description px-0">
+            <v-card-text class="description px-0 pb-2 py-3">
               {{ SingleProduct.description }}
             </v-card-text>
-            <v-card-text class="brand px-0 pt-0">
+            <v-card-text class="brand px-0 mb-0 pb-2 pt-0">
               Brand {{ SingleProduct.brand }}
             </v-card-text>
-            <v-card-text class="brand px-0 pt-0">
+            <v-card-text class="brand px-0 pb-2 pt-0">
               Availability:
               {{ SingleProduct.stock > 0 ? "in Stock" : "out of Stock" }}
             </v-card-text>
@@ -77,21 +86,25 @@
                 }}
               </span>
             </v-card-text>
-            <v-card-text class="pl-0 pt-0"> quantity </v-card-text>
-            <div class="counter px-1">
-              <v-icon size="20" @click="quantity > 1 ? quantity-- : false">
-                mdi-minus
-              </v-icon>
-              <input
-                readonly
-                type="number"
-                min="1"
-                v-model="quantity"
-                name=""
-                id=""
-                class="text-center py-3"
-              />
-              <v-icon size="20" @click="quantity++"> mdi-plus </v-icon>
+            <div class="d-flex align-center">
+              <v-card-text class="pl-0 pt-0 pb-0 quantity">
+                quantity
+              </v-card-text>
+              <div class="counter px-1">
+                <v-icon size="20" @click="quantity > 1 ? quantity-- : false">
+                  mdi-minus
+                </v-icon>
+                <input
+                  readonly
+                  type="number"
+                  min="1"
+                  v-model="quantity"
+                  name=""
+                  id=""
+                  class="text-center py-1"
+                />
+                <v-icon @click="quantity++"> mdi-plus </v-icon>
+              </div>
             </div>
             <v-card-text class="pl-0">
               Subtotal: ${{
@@ -102,7 +115,7 @@
                 ) * quantity
               }}
             </v-card-text>
-            <v-card-actions class="mt-7 w-100 px-0">
+            <v-card-actions class="w-100 px-0 justify-center">
               <v-btn
                 variant="outlined"
                 height="50"
@@ -149,6 +162,7 @@ export default {
     tab: "",
     quantity: 1,
     btnLoading: false,
+    widthSkeletonImage: "",
   }),
   async beforeMount() {
     this.tab = "";
@@ -156,6 +170,10 @@ export default {
     setTimeout(() => {
       this.loading = false;
     }, 2000);
+  },
+
+  mounted() {
+    this.widthSkeletonImage = window.innerWidth;
   },
 };
 </script>
@@ -172,6 +190,18 @@ export default {
 .rating-parent span {
   color: #787878;
   font-size: 15px;
+}
+.img-parent img {
+  max-height: 300px !important;
+}
+@media (max-width: 959px) {
+  .img-parent img {
+    max-height: 200px !important;
+  }
+  .v-tab img {
+    max-height: 64px !important;
+    max-width: 64px !important;
+  }
 }
 span.price {
   font-weight: 900;
@@ -194,5 +224,11 @@ span.price {
 .v-tab {
   width: 100px !important;
   height: 100px !important;
+}
+.quantity {
+  max-width: 82px;
+}
+::v-deep .v-slide-group__content {
+  justify-content: center;
 }
 </style>

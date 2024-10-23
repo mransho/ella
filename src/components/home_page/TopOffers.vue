@@ -1,8 +1,8 @@
 <template>
   <div class="top-offers bg-grey-lighten-4 py-9">
-    <v-container fluid>
+    <v-container max-width="1500">
       <v-row class="d-flex">
-        <v-col cols="4">
+        <v-col cols="12" sm="4" md="4" lg="4">
           <v-hover v-slot="{ isHovering, props }">
             <div class="parent rounded-lg h-100" v-bind="props">
               <img
@@ -16,7 +16,7 @@
             </div>
           </v-hover>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" sm="4" md="4" lg="4">
           <v-hover v-slot="{ isHovering, props }">
             <div class="parent rounded-lg h-100" v-bind="props">
               <img
@@ -30,7 +30,7 @@
             </div>
           </v-hover>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="12" sm="4">
           <v-hover v-slot="{ isHovering, props }">
             <div class="parent rounded-lg h-100" v-bind="props">
               <img
@@ -46,8 +46,8 @@
         </v-col>
       </v-row>
 
-      <v-row class="mt-5">
-        <v-col cols="6" class="pr-5 mt-3">
+      <v-row class="mt-5 Second-row">
+        <v-col class="pr-5 mt-3">
           <v-hover v-slot="{ isHovering, props }">
             <div class="parent rounded-lg h-100" v-bind="props">
               <img
@@ -62,7 +62,7 @@
           </v-hover>
         </v-col>
 
-        <v-col cols="6" class="pr-5 mt-3">
+        <v-col class="pl-5 mt-3">
           <v-hover v-slot="{ isHovering, props }">
             <div class="parent rounded-lg h-100" v-bind="props">
               <img
@@ -80,9 +80,28 @@
     </v-container>
   </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
 .parent {
   overflow: hidden;
   cursor: pointer;
+}
+@media (max-width: 599px) {
+  .Second-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+    &::-webkit-scrollbar-thumb {
+      width: 0px;
+    }
+    &::-webkit-scrollbar-track {
+      width: 0px;
+    }
+  }
+  .Second-row .v-col {
+    min-width: 350px;
+  }
 }
 </style>

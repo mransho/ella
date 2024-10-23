@@ -11,12 +11,20 @@
       <v-card v-else elevation="0">
         <v-row>
           <v-col
-            cols="3"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+            class="d-flex justify-center"
             v-for="item in categoryProducts.products"
             :key="item.id"
           >
             <v-lazy>
-              <v-card elevation="0" class="pb-5">
+              <v-card
+                elevation="0"
+                class="pb-5 mx-auto mx-sm-0"
+                style="max-width: 296px"
+              >
                 <v-hover v-slot="{ isHovering, props }">
                   <div class="img-parent">
                     <img
@@ -43,7 +51,7 @@
                     </v-btn>
                   </div>
                 </v-hover>
-                <v-card-text class="text-clamp pl-0 pb-1">
+                <v-card-text class="text-clamp pl-0 pb-1 pr-0">
                   ({{ item.title }})
                   {{ item.description }}
                 </v-card-text>
@@ -79,7 +87,10 @@
                     <img :src="pic" class="item-pic" alt="" />
                   </v-btn>
                 </v-btn-toggle>
-                <div class="mt-5">
+                <div
+                  class="mt-5"
+                  style="width: fit-content; margin-inline: auto"
+                >
                   <v-btn
                     width="220"
                     height="35"
@@ -166,6 +177,8 @@ export default {
   overflow: hidden;
   position: relative;
   transition: 0.2s all ease-in-out;
+  max-width: 260px;
+  margin-inline: auto;
 
   .quick-view-btn {
     border: 1px solid black;

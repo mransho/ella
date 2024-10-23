@@ -31,6 +31,7 @@
       </v-row>
     </v-container>
     <Swiper
+      :breakpoints="breakpoints"
       :modules="modules"
       :slides-per-view="4"
       :space-between="35"
@@ -42,14 +43,14 @@
         prevEl: '.swiper-button-prev',
       }"
       :loop="true"
-      :autoplay="{
+    >
+      <!-- :autoplay="{
         delay: 3000,
         pauseOnMouseEnter: true,
         disableOnInteraction: false,
-      }"
-    >
+      }" -->
       <Swiper-slide v-for="item in products" :key="item.id">
-        <v-card elevation="0" class="pb-5">
+        <v-card elevation="0" class="pb-5 item_parent">
           <v-hover v-slot="{ isHovering, props }">
             <div class="img-parent">
               <img
@@ -111,7 +112,7 @@
               <img :src="pic" class="item-pic" alt="" />
             </v-btn>
           </v-btn-toggle>
-          <div class="mt-5">
+          <div class="mt-5 d-flex justify-center">
             <v-btn
               density="compact"
               variant="outlined"
@@ -173,6 +174,20 @@ export default {
   },
   data: () => ({
     showenItem: {},
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+      },
+      580: {
+        slidesPerView: 2,
+      },
+      767: {
+        slidesPerView: 3,
+      },
+      990: {
+        slidesPerView: 4,
+      },
+    },
   }),
 };
 </script>
@@ -185,8 +200,6 @@ export default {
   font-size: 14px;
 }
 .img-thumbnail {
-  width: 100%;
-  height: 200px;
   transition: 0.2s all ease-in-out;
   cursor: pointer;
   height: 100%;
@@ -196,6 +209,8 @@ export default {
   overflow: hidden;
   position: relative;
   transition: 0.2 all ease-in-out;
+  display: flex;
+  justify-content: center;
 
   .quick-view-btn {
     border: 1px solid black;
@@ -256,5 +271,9 @@ span.price {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+}
+::v-deep .item_parent {
+  max-width: 380px !important;
+  margin-inline: auto;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div class="drawer">
     <v-navigation-drawer
-      width="370"
+      :width="windowWidth <= 767 ? (windowWidth / 2) * 1.5 : 370"
+      style="max-width: 85%"
       v-model="drawer"
       app
       location="right"
       class="pr-2 pl-4 pt-1 pb-0"
       temporary
     >
-      <!--  -->
       <v-card class="px-0 shoppingCartHeader mt-5" elevation="0">
         <v-card-title
           class="px-0 d-flex justify-space-between align-center w-100"
@@ -199,7 +199,7 @@
                 </v-hover>
               </div>
             </v-col>
-            <hr class="w-75 mt-2 mx-auto" v-if="i !== cartItems.length - 1" />
+            <hr class="w-75 mt-2 mb-4 mx-auto" v-if="i !== 0" />
           </v-row>
         </v-container>
       </v-card>
@@ -247,6 +247,11 @@ export default {
   data: () => ({
     drawer: false,
   }),
+  props: {
+    windowWidth: {
+      type: Number,
+    },
+  },
   computed: {
     ...mapState(cartStore, ["cartItems"]),
     calcTotalPrice() {

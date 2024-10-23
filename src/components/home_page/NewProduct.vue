@@ -17,8 +17,13 @@
     </div>
 
     <v-container fluid>
-      <v-row>
-        <v-col cols="7" class="d-flex align-center" v-if="!products.length">
+      <v-row class="d-flex align-center">
+        <v-col
+          cols="12"
+          md="7"
+          class="d-flex align-center"
+          v-if="!products.length"
+        >
           <v-row>
             <v-col cols="4" v-for="num in 3" :key="num">
               <v-skeleton-loader
@@ -27,8 +32,9 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="7" v-else>
+        <v-col cols="12" md="7" class="order-1 order-md-0" v-else>
           <Swiper
+            :breakpoints="breakpoints"
             :modules="modules"
             :slides-per-view="3"
             :space-between="20"
@@ -38,9 +44,13 @@
             :loop="true"
           >
             <Swiper-slide v-for="item in products" :key="item.id">
-              <v-card elevation="0" class="pb-5">
+              <v-card
+                elevation="0"
+                style="background: transparent"
+                class="pb-5 item_parent"
+              >
                 <v-hover v-slot="{ isHovering, props }">
-                  <div class="img-parent">
+                  <div class="img-parent justify-center d-flex">
                     <img
                       :src="
                         showenItem[item.title]
@@ -101,7 +111,7 @@
                     <img :src="pic" class="item-pic" alt="" />
                   </v-btn>
                 </v-btn-toggle>
-                <div class="mt-5">
+                <div class="mt-5 d-flex justify-center">
                   <v-btn
                     density="compact"
                     variant="outlined"
@@ -120,7 +130,7 @@
             </Swiper-slide>
           </Swiper>
         </v-col>
-        <v-col cols="5">
+        <v-col cols="12" md="5">
           <img class="w-100" src="@/assets/images/vr-banner.webp" alt="" />
         </v-col>
       </v-row>
@@ -162,6 +172,23 @@ export default {
   },
   data: () => ({
     showenItem: {},
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+      },
+      650: {
+        slidesPerView: 2,
+      },
+      800: {
+        slidesPerView: 3,
+      },
+      959: {
+        slidesPerView: 2,
+      },
+      1300: {
+        slidesPerView: 3,
+      },
+    },
   }),
 };
 </script>
@@ -175,8 +202,6 @@ export default {
   font-size: 14px;
 }
 .img-thumbnail {
-  width: 100%;
-  height: 200px;
   transition: 0.2s all ease-in-out;
   cursor: pointer;
   height: 100%;
@@ -248,5 +273,11 @@ span.price {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+  height: 38px;
+}
+
+::v-deep .item_parent {
+  max-width: 380px !important;
+  margin-inline: auto;
 }
 </style>

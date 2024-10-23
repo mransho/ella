@@ -1,9 +1,9 @@
 <template>
   <div class="app-foteer">
     <v-footer :app="true" absolute color="grey-lighten-3 px-0 py-0">
-      <v-container fluid class="px-0 pb-0">
+      <v-container fluid style="overflow: hidden" class="px-0 pb-0">
         <v-row class="px-5 pt-10">
-          <v-col cols="3">
+          <v-col cols="4" md="3" class="order-2">
             <v-card elevation="0" color="transparent">
               <v-card-title class="pb-4 px-0">Shop</v-card-title>
               <v-card-text
@@ -23,7 +23,7 @@
             </v-card>
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4" md="3" class="order-3">
             <v-card elevation="0" color="transparent">
               <v-card-title class="pb-4 px-0">Further Info</v-card-title>
               <v-card-text class="pt-0 pb-4 px-0">About</v-card-text>
@@ -40,7 +40,7 @@
             </v-card>
           </v-col>
 
-          <v-col cols="3">
+          <v-col cols="4" md="3" class="order-4">
             <v-card elevation="0" color="transparent">
               <v-card-title class="pb-4 px-0">Customer Service</v-card-title>
               <v-card-text class="pt-0 pb-4 px-0">Search Terms</v-card-text>
@@ -55,13 +55,17 @@
             </v-card>
           </v-col>
 
-          <v-col cols="3" class="pt-5">
+          <v-col
+            cols="12"
+            md="3"
+            class="pt-5 order-1 order-md-5 d-flex flex-column parent-logo-col"
+          >
             <v-card elevation="0" color="transparent">
               <img
                 src="../../assets/images/footer-logo.webp"
                 alt=""
                 @click="$router.push({ name: 'home' })"
-                class="pointer"
+                class="pointer mb-7 mb-md-2"
               />
               <v-card-text
                 class="d-flex align-center pt-0 pb-4 px-0"
@@ -213,7 +217,7 @@
             </div>
           </v-col>
 
-          <v-col cols="12">
+          <v-col cols="12" class="order-5">
             <div
               class="img-parent d-flex justify-center align-center mt-12 mb-8"
             >
@@ -225,19 +229,24 @@
           </v-col>
         </v-row>
         <v-row class="px-5 mb-0 bg-white">
-          <v-col cols="6" class="d-flex flex-column">
-            <p>
+          <v-col cols="12" md="6" class="d-flex flex-column">
+            <p class="text-center text-md-start">
               &copy; {{ new Date().getFullYear() }} Ella Demo. All Rights
               Reserved. Powered By
               <a href="https://www.linkedin.com/in/mahmod11/">
                 Mahmoud Mostafa
               </a>
             </p>
-
-            <p>shopify themes by halothemes.net</p>
+            <p class="text-center text-md-start">
+              shopify themes by halothemes.net
+            </p>
           </v-col>
-          <v-col cols="6" class="d-flex justify-end align-center">
-            <div class="master-cards d-flex justify-end" v-gap="'10px'">
+          <v-col
+            cols="12"
+            md="6"
+            class="d-flex justify-md-end justify-center align-center"
+          >
+            <div class="master-cards svgs d-flex justify-end" v-gap="'10px'">
               <span
                 class="d-flex align-center"
                 v-for="(svg, i) in svgs"
@@ -272,7 +281,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .v-card-title {
   font-size: 16px;
   font-weight: 900;
@@ -313,5 +322,21 @@ a {
   text-decoration: none;
   color: #777777;
   font-weight: 700;
+}
+.img-parent img {
+  max-width: 100%;
+}
+@media (max-width: 959px) {
+  .parent-logo-col {
+    align-items: center;
+    .v-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .svgs {
+    gap: 2px !important;
+  }
 }
 </style>

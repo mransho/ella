@@ -1,7 +1,7 @@
 <template>
   <div class="Quality-features py-16 bg-grey-lighten-2 px-5">
     <v-coontainer fluid>
-      <v-row>
+      <v-row class="d-flex flex-row flex-nowrap">
         <v-col v-for="card in cards" :key="card.title">
           <v-hover v-slot="{ isHovering, props }">
             <v-card
@@ -64,12 +64,25 @@ export default {
   }),
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 ::v-deep svg {
   width: 60px;
 }
+.v-row {
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0px;
+  }
+}
 .v-card {
   transition: 0.2s all ease-in-out;
+  width: 300px;
 }
 .v-card-title {
   font-weight: 600;

@@ -10,7 +10,10 @@
       <v-container fluid>
         <v-row>
           <v-col
-            cols="2"
+            cols="6"
+            sm="4"
+            md="3"
+            lg="2"
             class="justify-center"
             v-for="cat in categories"
             :key="cat.title"
@@ -30,7 +33,7 @@
                   />
                 </div>
               </v-hover>
-              <v-card-text>{{ cat.title }}</v-card-text>
+              <v-card-text class="text-center">{{ cat.title }}</v-card-text>
             </v-card>
           </v-col>
         </v-row>

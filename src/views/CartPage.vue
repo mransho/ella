@@ -1,7 +1,7 @@
 <template>
   <div class="CartPage">
     <v-container fluid>
-      <v-row class="px-6">
+      <v-row class="px-0 px-lg-6">
         <v-col cols="12" class="pt-5 breadcrumbs pb-0 px-0">
           <v-breadcrumbs :items="['Home', 'Your Cart']">
             <template v-slot:divider>
@@ -131,7 +131,7 @@
             </v-btn>
           </v-cart-actions>
         </v-col>
-        <v-col v-if="cartItems.length" cols="8" class="px-3">
+        <v-col v-if="cartItems.length" cols="12" lg="8" class="px-0 px-lg-3">
           <v-table class="w-100">
             <thead>
               <tr>
@@ -143,31 +143,42 @@
             </thead>
             <tbody>
               <tr v-for="item in cartItems" :key="item.id">
-                <td style="width: 55%">
-                  <v-row class="align-center">
-                    <v-col cols="5">
-                      <img :src="item.thumbnail" class="w-100" alt="" />
+                <td class="py-0 px-0 py-lg-5 w-25 w-lg-50">
+                  <v-row
+                    class="align-center d-inline d-lg-flex flex-column flex-lg-row"
+                  >
+                    <v-col cols="12" lg="5" class="pa-0 d-flex justify-center">
+                      <img
+                        style="max-width: 200px"
+                        :src="item.thumbnail"
+                        class="w-100"
+                        alt=""
+                      />
                     </v-col>
-                    <v-col cols="7">
-                      <v-card-title class="px-0 item-title pr-2">
+                    <v-col cols="12" lg="7" class="pa-0">
+                      <v-card-title
+                        class="pa-0 item-title text-center text-lg-start pr-0 pr-lg-2"
+                      >
                         {{ item.title }} sample - {{ item.category }}
                       </v-card-title>
-                      <v-card-text class="px-0 pb-0">
+                      <v-card-text
+                        class="text-center item-title text-lg-start px-0 pb-0"
+                      >
                         Category {{ item.category }}
                       </v-card-text>
                     </v-col>
                   </v-row>
                 </td>
-                <td style="width: 15%" class="text-center">
+                <td class="text-center pa-0">
                   <v-card-text class="px-0 pt-2 price">
                     ${{ item.price }}
                   </v-card-text>
                 </td>
-                <td style="width: 15%" class="text-center">
+                <td class="text-center pa-0">
                   <div
                     class="item-footer d-flex justify-space-between align-center"
                   >
-                    <div class="counter px-1">
+                    <div class="counter px-1 ma-auto">
                       <v-icon
                         size="17"
                         color="#909090"
@@ -186,7 +197,7 @@
                         v-model="item.quantity"
                         name=""
                         id=""
-                        class="text-center py-3"
+                        class="text-center py-1 py-lg-3"
                       />
                       <v-icon
                         size="17"
@@ -198,14 +209,17 @@
                     </div>
                   </div>
                 </td>
-                <td style="width: 15%" class="px-0 text-center price">
-                  ${{
-                    Math.ceil(
-                      item.price - item.price * (item.discountPercentage / 100)
-                    ) * item.quantity
-                  }}
+                <td class="px-0 text-center price">
+                  <span>
+                    ${{
+                      Math.ceil(
+                        item.price -
+                          item.price * (item.discountPercentage / 100)
+                      ) * item.quantity
+                    }}
+                  </span>
                 </td>
-                <td class="text-center">
+                <td class="text-center pa-0">
                   <v-hover v-slot="{ isHovering, props }">
                     <v-icon
                       @click="deleteItem(item.id)"
@@ -229,40 +243,50 @@
           <v-divider length="100%" class="mt-5" color="black"></v-divider>
           <v-divider length="100%" color="black"></v-divider>
 
-          <v-card-text
-            class="px-0 pt-5 pb-2 d-flex align-center"
-            v-gap="'10px'"
-            v-if="cartItems.length"
+          <div
+            class="d-flex d-lg-block align-start flex-column mx-auto mx-lg-0"
           >
-            <span class="d-flex align-center">
-              <svg
-                id="Layer_1"
-                data-name="Layer 1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 179.94 179.96"
-                class="icon icon-shield-check"
-                width="30"
-              >
-                <path
-                  d="M90,0,5,42.78C13.73,105.26,38.14,154.32,90,180c51.83-25.64,76.25-74.7,85-137.18Z"
-                ></path>
-                <polygon
-                  fill="white"
-                  class="cls-1"
-                  points="149.83 67.57 134.81 52.55 79.31 108.05 49.74 78.48 34.72 93.5 79.15 137.94 79.31 137.78 79.47 137.94 149.83 67.57"
-                ></polygon>
-              </svg>
-            </span>
-            <span>secure shopping guarantee</span>
-          </v-card-text>
-          <img
-            src="@/assets/images/cart-page-cards.webp"
-            width="270"
-            class="cart-page-cards"
-            alt=""
-          />
+            <v-card-text
+              class="px-0 mt-2 mt-lg-0 pt-5 pb-2 d-flex align-center"
+              v-gap="'10px'"
+              v-if="cartItems.length"
+            >
+              <span class="d-flex align-center">
+                <svg
+                  id="Layer_1"
+                  data-name="Layer 1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 179.94 179.96"
+                  class="icon icon-shield-check"
+                  width="30"
+                >
+                  <path
+                    d="M90,0,5,42.78C13.73,105.26,38.14,154.32,90,180c51.83-25.64,76.25-74.7,85-137.18Z"
+                  ></path>
+                  <polygon
+                    fill="white"
+                    class="cls-1"
+                    points="149.83 67.57 134.81 52.55 79.31 108.05 49.74 78.48 34.72 93.5 79.15 137.94 79.31 137.78 79.47 137.94 149.83 67.57"
+                  ></polygon>
+                </svg>
+              </span>
+              <span>secure shopping guarantee</span>
+            </v-card-text>
+            <img
+              src="@/assets/images/cart-page-cards.webp"
+              width="270"
+              class="cart-page-cards"
+              alt=""
+            />
+          </div>
         </v-col>
-        <v-col cols="4" class="px-3" v-if="cartItems.length">
+        <v-col
+          cols="12"
+          lg="4"
+          class="px-3 mt-2 mt-lg-0"
+          v-if="cartItems.length"
+          style="max-width: 510px; margin-inline: auto"
+        >
           <v-card elevation="0">
             <v-card-title class="Order-Summary"> Order Summary </v-card-title>
             <v-divider length="100%" color="black"></v-divider>
@@ -482,5 +506,13 @@ th {
 .price {
   color: black;
   font-size: 14px;
+}
+@media (max-width: 590px) {
+  .item-title {
+    font-size: 12px;
+  }
+  th {
+    font-size: 12px;
+  }
 }
 </style>

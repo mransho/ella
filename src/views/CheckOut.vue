@@ -2,8 +2,17 @@
   <div class="Checkout">
     <v-conainer fluid class="m-0 pa-0">
       <v-row>
-        <v-col cols="7" class="py-0">
-          <v-card class="w-100 pt-16 pl-16" color="white" elevation="0">
+        <v-col
+          cols="12"
+          md="7"
+          class="py-0 d-flex justify-center order-1 order-md-0"
+        >
+          <v-card
+            class="w-100 pt-16 mx-3"
+            color="white"
+            elevation="0"
+            style="max-width: 450px"
+          >
             <v-card-title class="font-weight-bold py-0">
               new-ella-demo
             </v-card-title>
@@ -145,7 +154,11 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="5" class="right-col bg-grey-lighten-3 pt-16">
+        <v-col
+          cols="12"
+          md="5"
+          class="right-col bg-grey-lighten-3 pt-16 d-flex justify-center justify-md-start"
+        >
           <v-card elevation="0" class="card-parent">
             <v-card
               class="w-100 pl-5 my-5 d-flex align-center justify-space-between"
@@ -230,6 +243,10 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.Checkout {
+  min-height: 100vh;
+  overflow: hidden;
+}
 .city_parent .v-text-field,
 .city_parent .v-select {
   flex: 1 1 33.33%;
@@ -257,13 +274,12 @@ input {
   padding: 0;
 }
 .right-col {
-  min-height: 101vh;
   padding: 26px 10px 10px 10px;
 }
 .card-parent {
   background-color: inherit;
   width: 413px;
-  max-width: 80%;
+  max-width: 95%;
   .v-card {
     background-color: inherit;
     min-height: 73px;

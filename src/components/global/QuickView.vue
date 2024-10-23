@@ -3,23 +3,28 @@
     <v-dialog max-width="900" v-model="dialog">
       <v-icon class="icon-close" @click="dialog = false"> mdi-close </v-icon>
       <v-card elevation="0" class="content_card">
-        <v-container class="bg-white pt-10 px-10" fluid>
+        <v-container class="bg-white pa-2 pt-md-10 pb-md-5 px-md-10" fluid>
           <v-row>
-            <v-col cols="7">
-              <div class="d-flex justify-center">
+            <v-col cols="12" md="7">
+              <div class="d-flex img-parent justify-center">
                 <img
                   :src="tab ? tab : product.thumbnail"
-                  height="400"
                   alt=""
                   v-if="!loading"
                 />
               </div>
               <v-skeleton-loader
                 v-if="loading"
-                type="image, image, image"
+                :type="`${
+                  widthSkeletonImage < 960 ? 'image' : 'image, image, image'
+                }`"
               ></v-skeleton-loader>
 
-              <v-tabs center-active class="mt-10" v-model="tab">
+              <v-tabs
+                center-active
+                class="mt-3 mt-md-10 mb-3 my-md-0"
+                v-model="tab"
+              >
                 <v-tab
                   v-for="(img, i) in product.images"
                   :key="i"
@@ -30,25 +35,20 @@
                     v-if="loading"
                     type="image, image, image"
                   ></v-skeleton-loader>
-                  <img
-                    v-if="!loading"
-                    :src="img"
-                    alt=""
-                    width="100"
-                    height="100"
-                  />
+                  <img v-if="!loading" class="img-tab" :src="img" alt="" />
                 </v-tab>
               </v-tabs>
             </v-col>
-            <v-col cols="5" class="pt-0 pl-6">
+            <v-col cols="12" md="5" class="pt-0 pl-6 mt-md-5 mt-md-0">
               <v-skeleton-loader
                 v-if="loading"
                 type="article, article, article"
               ></v-skeleton-loader>
 
               <v-card elevation="0" v-if="!loading">
-                <v-card-title class="px-0">
-                  ({{ product.title }}) sample - {{ product.category }} for Sale
+                <v-card-title class="px-0"
+                  >({{ product.title }}) sample - {{ product.category }} for
+                  Sale
                 </v-card-title>
                 <div class="rating-parent d-flex align-center" v-gap="'10px'">
                   <v-rating
@@ -65,8 +65,8 @@
                 <v-card-text class="description px-0">
                   {{ product.description }}
                 </v-card-text>
-                <v-card-text class="brand px-0 pt-0">
-                  Brand {{ product.brand }}
+                <v-card-text class="brand px-0 pt-0 pb-0">
+                  Brand: {{ product.brand }}
                 </v-card-text>
                 <v-card-text class="brand px-0 pt-0">
                   Availability:
@@ -107,13 +107,13 @@
                     ) * quantity
                   }}
                 </v-card-text>
-                <v-card-actions class="mt-2 w-100 px-0">
+                <v-card-actions class="mt-2 w-100 px-0 justify-center">
                   <v-btn
                     variant="outlined"
                     height="50"
                     class="w-75 rounded-xl bg-black"
                     density="compact"
-                    @click="addToCart(product)"
+                    @click="addToCart(product), (quantity = 1)"
                     :loading="btnLoading"
                   >
                     Add To Cart
@@ -138,6 +138,7 @@ export default {
     quantity: 1,
     product: {},
     btnLoading: false,
+    widthSkeletonImage: "",
   }),
   inject: ["Emitter"],
   watch: {
@@ -170,6 +171,7 @@ export default {
         this.loading = false;
       }, 500);
     });
+    this.widthSkeletonImage = window.innerWidth;
   },
 };
 </script>
@@ -199,6 +201,12 @@ export default {
 }
 .v-card-actions .v-btn {
   text-transform: none;
+}
+.img-parent img {
+  height: 400px;
+}
+.img-tab {
+  height: 100px;
 }
 .v-card-title {
   font-size: 19px;
@@ -236,5 +244,31 @@ span.price {
   width: 100px !important;
   height: 100px !important;
   margin-inline: 0px !important;
+}
+@media (max-width: 959px) {
+  .img-parent img {
+    height: 150px;
+  }
+  .v-tabs {
+    height: 50px;
+  }
+  .v-tab {
+    width: 50px !important;
+    height: 50px !important;
+    margin-inline: 50px !important;
+  }
+  .img-tab {
+    height: 50px;
+  }
+  ::v-deep .v-slide-group__content {
+    justify-content: center;
+    button {
+      margin-inline: 0px !important;
+    }
+  }
+  .v-dialog {
+    max-width: 700px;
+    max-height: 100%;
+  }
 }
 </style>

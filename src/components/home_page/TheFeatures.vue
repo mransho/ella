@@ -1,9 +1,11 @@
 <template>
   <div class="features">
-    <v-container>
+    <v-container fluid>
       <v-row>
-        <v-col cols="4">
-          <div class="parent d-flex align-senter justify-center">
+        <v-col cols="4" class="d-flex align-center justify-center">
+          <div
+            class="parent d-flex align-center justify-center flex-column flex-md-row"
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -12,7 +14,7 @@
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 512"
-              class="svg-inline--fa fa-shipping-fast fa-w-20 fa-3x mr-5"
+              class="svg-inline--fa fa-shipping-fast fa-w-20 fa-3x mr-md-5 pb-2 pb-md-0"
             >
               <path
                 fill="currentColor"
@@ -20,11 +22,14 @@
                 class=""
               ></path>
             </svg>
-            <span>Free Shipping & Returns </span>
+            <span class="text-center">Free Shipping & Returns </span>
           </div>
         </v-col>
-        <v-col cols="4">
-          <div class="guarantee parent d-flex align-senter justify-center">
+        <v-col cols="4" class="d-flex align-center justify-center">
+          <div
+            style="min-width: 100%; padding-inline: 10px"
+            class="guarantee parent d-flex align-center justify-center flex-column flex-md-row"
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -33,7 +38,7 @@
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 384 512"
-              class="svg-inline--fa fa-award fa-w-12 fa-3x mr-5"
+              class="svg-inline--fa fa-award fa-w-12 fa-3x mr-md-5 pb-2 pb-md-0"
             >
               <path
                 fill="currentColor"
@@ -41,11 +46,13 @@
                 class=""
               ></path>
             </svg>
-            <span>lowest price guarantee</span>
+            <span class="text-center">lowest price guarantee</span>
           </div>
         </v-col>
-        <v-col cols="4">
-          <div class="parent d-flex align-senter justify-center">
+        <v-col cols="4" class="d-flex align-center justify-center">
+          <div
+            class="parent trophy d-flex align-center justify-center flex-column flex-md-row"
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -54,7 +61,7 @@
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 576 512"
-              class="svg-inline--fa fa-trophy-alt fa-w-18 fa-3x mr-5"
+              class="svg-inline--fa fa-trophy-alt fa-w-18 fa-3x mr-md-5 pb-2 pb-md-0"
             >
               <path
                 fill="currentColor"
@@ -62,7 +69,7 @@
                 class=""
               ></path>
             </svg>
-            <span>longest warranties offer</span>
+            <span class="text-center">longest warranties offer</span>
           </div>
         </v-col>
       </v-row>
@@ -98,5 +105,17 @@ svg {
 }
 .guarantee svg {
   width: 25px;
+}
+
+@media (max-width: 440px) {
+  .parent > svg {
+    width: 30px;
+  }
+  .guarantee svg {
+    width: 20px;
+  }
+  .parent > span {
+    font-size: 12px;
+  }
 }
 </style>

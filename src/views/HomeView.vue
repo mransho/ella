@@ -20,18 +20,18 @@
     />
     <v-container fluid>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <img
             src="@/assets/images/band-left-cover.webp"
             alt=""
-            class="w-100 pr-5"
+            class="w-100"
           />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="12" md="6">
           <img
             src="@/assets/images/band-right-cover.webp"
             alt=""
-            class="w-100 pl-5"
+            class="w-100"
           />
         </v-col>
       </v-row>
@@ -44,8 +44,8 @@
       :index="4"
     />
     <v-container fluid>
-      <v-row>
-        <v-col>
+      <v-row class="tv-banner">
+        <v-col style="min-width: 800px">
           <img src="@/assets/images/tv-banner.webp" alt="" class="w-100" />
         </v-col>
       </v-row>
@@ -110,3 +110,17 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+.tv-banner {
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0px;
+  }
+}
+</style>
