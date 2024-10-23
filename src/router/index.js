@@ -30,6 +30,7 @@ const routes = [
 ];
 
 const router = createRouter({
+  //createWebHashHistory
   history: createWebHashHistory(),
   routes,
   scrollBehavior() {
